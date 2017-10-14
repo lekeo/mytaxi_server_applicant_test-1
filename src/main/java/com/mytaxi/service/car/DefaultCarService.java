@@ -1,10 +1,10 @@
 package com.mytaxi.service.car;
 
-import com.google.common.collect.Lists;
 import com.mytaxi.dataaccessobject.CarRepository;
-import com.mytaxi.domainobject.CarDo;
+import com.mytaxi.domainobject.CarDO;
 import com.mytaxi.exception.ConstraintsViolationException;
 import com.mytaxi.exception.EntityNotFoundException;
+import java.time.ZonedDateTime;
 import java.util.List;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +22,21 @@ public class DefaultCarService implements CarService
 
 
     @Override
-    public CarDo find(Long carId) throws EntityNotFoundException
+    public CarDO find(Long carId) throws EntityNotFoundException
     {
         return findCarChecked(carId);
     }
 
 
     @Override
-    public CarDo create(CarDo carDo) throws ConstraintsViolationException
+    public CarDO create(CarDO carDo) throws ConstraintsViolationException
     {
-        CarDo car;
+        CarDO car;
         try
         {
+            if (carDo.getDateCreated() == null ){
+                carDo.setDateCreated(ZonedDateTime.now());
+            }
             car = carRepository.save(carDo);
 
         }
@@ -54,19 +57,20 @@ public class DefaultCarService implements CarService
 
 
     @Override
-    public List<CarDo> findAll()
+    public List<CarDO> findAllByEngineTypeOrManufacturerOrGreaterThanSeatCountOrGreaterThanRating(String engineType, String manufacturer, Integer seatcount, Float rating)
     {
-        return Lists.newArrayList(carRepository.findAll());
+        return carRepository.findAllByEngineTypeOrManufacturerOrGreaterThanSeatCountOrGreaterThanRating(engineType,manufacturer,seatcount,rating);
     }
 
 
-    private CarDo findCarChecked(Long carId) throws EntityNotFoundException
+    private CarDO findCarChecked(Long carId) throws EntityNotFoundException
     {
-        CarDo carDo = carRepository.findOne(carId);
+        CarDO carDo = carRepository.findOne(carId);
         if (carDo == null)
         {
             throw new EntityNotFoundException("Could not find entity with id: " + carId);
         }
         return carDo;
     }
+
 }

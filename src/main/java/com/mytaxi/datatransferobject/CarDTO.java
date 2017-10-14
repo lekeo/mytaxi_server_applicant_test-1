@@ -1,6 +1,7 @@
 package com.mytaxi.datatransferobject;
 
-import java.time.ZonedDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,14 +13,19 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CarDTO
 {
+
+    @JsonIgnore
     private Long id;
-    private ZonedDateTime date_created;
-    private String license_plate;
-    private Integer seat_count;
+
+
+    private String dateCreated;
+    private String licensePlate;
+    private Integer seatCount;
     private boolean convertible;
-    private String rating;
-    private String engine_type;
+    private Float rating;
+    private String engineType;
     private String manufacturer;
 }

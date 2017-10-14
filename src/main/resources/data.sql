@@ -40,3 +40,15 @@ values
  (8,
  'aced0005737200226f72672e737072696e676672616d65776f726b2e646174612e67656f2e506f696e7431b9e90ef11a4006020002440001784400017978704023000000000000404bfa1cac083127', now(), now(), false, 'ONLINE',
 'driver08pw', 'driver08');
+
+--insert into car (id,convertible,date_created,engine_type,licence_plate,manufacturer,rating,seat_count)
+--values (id, false, now(),'GAS', 'XDD685', 'Audi', 9.4, 4);
+--
+--insert into car (id,convertible,date_created,engine_type,licence_plate,manufacturer,rating,seat_count)
+--values (id, false, now(), 'ETANOL','XDccD685', 'BMW', 8.4, 4);
+--
+--insert into car (id,convertible,date_created,engine_type,licence_plate,manufacturer,rating,seat_count)
+--values (id, false, now(), 'ELECTRIC', 'X45D685', 'Toyota', 7.2, 4);
+--
+--insert into car (id,convertible,date_created,engine_type,licence_plate,manufacturer,rating,seat_count)
+--values (id, true, now(), 'GAS', 'X45665', 'Ferrari', 10.0, 2);
