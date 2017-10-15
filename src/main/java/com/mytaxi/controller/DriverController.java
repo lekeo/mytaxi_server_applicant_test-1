@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
  * <p/>
  */
 @RestController
-@RequestMapping("v1/drivers")
+@RequestMapping("/api/v1/drivers")
 public class DriverController
 {
 
@@ -102,12 +102,22 @@ public class DriverController
 
 
     @GetMapping("/select/{driverId}/{carId}")
+    @ApiOperation(value = "Select one car for driver",response = DriverDTO.class)
+    @ApiResponses(value = {
+        @ApiResponse(code = 200,message = "Ok"),
+        @ApiResponse(code = 404,message = "resource not found")
+    })
     public DriverDTO selectCar(@PathVariable Long driverId, @PathVariable Long carId) throws CarAlreadyInUseException, EntityNotFoundException
     {
         return DriverMapper.makeDriverDTO(driverService.selectCar(driverId, carId));
     }
 
     @GetMapping("/deselect/{driverId}")
+    @ApiOperation(value = "Dedelect car for driver",response = DriverDTO.class)
+    @ApiResponses(value = {
+        @ApiResponse(code = 200,message = "Ok"),
+        @ApiResponse(code = 404,message = "resource not found")
+    })
     public DriverDTO deselectCar(@PathVariable Long driverId) throws EntityNotFoundException
     {
         return DriverMapper.makeDriverDTO(driverService.deselectCar(driverId));
