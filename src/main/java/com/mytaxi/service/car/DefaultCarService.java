@@ -31,6 +31,8 @@ public class DefaultCarService implements CarService
     @Override
     public CarDO create(CarDO carDo) throws ConstraintsViolationException
     {
+
+        LOG.info("Call method create car");
         CarDO car;
         try
         {
@@ -38,6 +40,7 @@ public class DefaultCarService implements CarService
                 carDo.setDateCreated(ZonedDateTime.now());
             }
             car = carRepository.save(carDo);
+            LOG.info("Car created");
 
         }
         catch (DataIntegrityViolationException e)
@@ -52,7 +55,9 @@ public class DefaultCarService implements CarService
     @Override
     public void delete(Long carId) throws EntityNotFoundException
     {
+        LOG.info("Call delete car");
         carRepository.delete(carId);
+        LOG.info("Car deleted");
     }
 
 
@@ -65,9 +70,11 @@ public class DefaultCarService implements CarService
 
     private CarDO findCarChecked(Long carId) throws EntityNotFoundException
     {
+        LOG.info("Call method find car");
         CarDO carDo = carRepository.findOne(carId);
         if (carDo == null)
         {
+            LOG.info("Car not found with id: {0}",carId);
             throw new EntityNotFoundException("Could not find entity with id: " + carId);
         }
         return carDo;

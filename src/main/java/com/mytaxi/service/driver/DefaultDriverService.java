@@ -82,8 +82,10 @@ public class DefaultDriverService implements DriverService
     @Transactional
     public void delete(Long driverId) throws EntityNotFoundException
     {
+        LOG.info("Call method delete Driver");
         DriverDO driverDO = findDriverChecked(driverId);
         driverDO.setDeleted(true);
+        LOG.info("Car deleted with sucess");
     }
 
 
@@ -99,8 +101,10 @@ public class DefaultDriverService implements DriverService
     @Transactional
     public void updateLocation(long driverId, double longitude, double latitude) throws EntityNotFoundException
     {
+        LOG.info("Call method update location for car");
         DriverDO driverDO = findDriverChecked(driverId);
         driverDO.setCoordinate(new GeoCoordinate(latitude, longitude));
+        LOG.info("Location updated with sucess");
     }
 
 
@@ -131,11 +135,13 @@ public class DefaultDriverService implements DriverService
                     driver.getSelectedCar().stream().findFirst()
                         .get().getId().equals(carDo.getId())).count() > 0)
             {
+                LOG.info("Car selected is already for another driver, Driver Id: {0}, Car id: {1} );",carId,driverId);
                 throw new CarAlreadyInUseException("Car already selected by another driver");
             }
 
             driverDO.addCar(carDo);
             driverRepository.save(driverDO);
+            LOG.info("Call method select Car  driverId: {0} carId: {1}", driverId, carId);
         }
         return driverDO;
     }
@@ -163,6 +169,7 @@ public class DefaultDriverService implements DriverService
         }
         driverDO.setSelectedCar(Lists.newArrayList());
         driverDO = driverRepository.save(driverDO);
+        LOG.info("Car deselected for driverId: {0}", driverId);
         return driverDO;
     }
 }
